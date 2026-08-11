@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drizzl</title>
+  <link rel="stylesheet" href="./src/style.css" />
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark">
+
+  <!-- Background Decorative Light Orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Navigation Bar -->
+  <header class="nav-bar">
+    <div class="nav-container">
+
+      <!-- Brand Logo -->
+      <a href="#" class="brand-logo">
+        <span class="logo-text">Drizzl</span>
+      </a>
+
+      <!-- Main Navigation Links (Hidden by default when logged out) -->
+      <nav class="nav-links hidden" id="navLinks">
+        <a href="#" class="nav-item active" data-section="all">All Recipes</a>
+        <a href="#" class="nav-item placeholder" data-section="my-recipes">My Recipes</a>
+        <a href="#" class="nav-item placeholder" data-section="nutrition">Nutrition</a>
+        <a href="#" class="nav-item placeholder" data-section="shopping">Shopping</a>
+      </nav>
+
+      <!-- Right Controls: Search & Profile -->
+      <div class="nav-actions">
+
+        <!-- Expanding Search Box -->
+        <div class="search-wrapper" id="searchWrapper">
+          <button class="icon-btn search-trigger" id="searchTrigger" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search recipes, ingredients..."
+            autocomplete="off"
+          />
+          <button class="search-close" id="searchClose" aria-label="Close search">&times;</button>
+        </div>
+
+        <!-- Profile Icon -->
+        <button class="icon-btn profile-btn" id="profileBtn" aria-label="User Profile">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+<!-- Main View Container -->
+  <main class="content-wrapper">
+
+    <!-- Hero / Section Header -->
+    <div class="section-header">
+      <h1 class="page-title" id="pageTitle">All Recipes</h1>
+      <p class="page-subtitle" id="pageSubtitle">Explore high-protein, curated meals for your goals.</p>
+    </div>
+
+    <!-- Filter & Sort Controls Bar (Visible on Recipe Views) -->
+    <div id="filterBar" class="filter-bar glass-card">
+      <div class="filter-controls">
+
+        <!-- Category Filter -->
+        <div class="custom-select-wrapper">
+          <select id="categoryFilter" class="custom-select">
+            <option value="">All Categories</option>
+          </select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        <!-- Difficulty Filter -->
+        <div class="custom-select-wrapper">
+          <select id="difficultyFilter" class="custom-select">
+            <option value="">All Difficulties</option>
+          </select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        <!-- Protein Filter -->
+        <div class="custom-select-wrapper">
+          <select id="proteinFilter" class="custom-select">
+            <option value="">All Proteins</option>
+          </select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        <!-- Reset Button -->
+        <button id="resetFiltersBtn" class="reset-btn" aria-label="Reset filters">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+          <span>Reset</span>
+        </button>
+
+      </div>
+
+      <!-- Sorting Selector -->
+      <div class="sort-controls">
+        <label for="sortBySelect" class="sort-label">Sort By</label>
+        <div class="custom-select-wrapper">
+          <select id="sortBySelect" class="custom-select sort-select">
+            <option value="newest">Recently Added</option>
+            <option value="title-asc">Title (A-Z)</option>
+            <option value="title-desc">Title (Z-A)</option>
+            <option value="prep-asc">Prep Time (Fastest)</option>
+            <option value="prep-desc">Prep Time (Slowest)</option>
+            <option value="difficulty-asc">Difficulty (Easiest)</option>
+          </select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status States -->
+    <div id="loading" class="glass-card status-box hidden">
+      <div class="spinner"></div>
+      <span>Loading recipes from database...</span>
+    </div>
+
+    <div id="error" class="glass-card status-box error-box hidden"></div>
+
+    <!-- Main Recipe Grid View -->
+    <div id="recipeGrid" class="recipe-grid"></div>
+
+    <!-- NUTRITION DASHBOARD VIEW -->
+    <div id="nutritionView" class="nutrition-dashboard hidden">
+
+      <!-- Top Row: Caloric & Macro Overview -->
+      <div class="nutrition-overview-grid">
+
+        <!-- Main Calorie Target Glass Card -->
+        <div class="glass-card macro-summary-card">
+          <div class="macro-summary-header">
+            <div>
+              <span class="card-eyebrow">Daily Progress</span>
+              <h2>Caloric Target</h2>
+            </div>
+            <button class="icon-btn-sm" id="editGoalsQuickBtn" title="Edit Goals">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            </button>
+          </div>
+
+          <div class="calorie-progress-container">
+            <div class="calorie-ring-wrapper">
+              <svg class="calorie-ring" viewBox="0 0 120 120">
+                <circle class="ring-bg" cx="60" cy="60" r="50"></circle>
+                <circle class="ring-fill" id="calorieRingFill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="80"></circle>
+              </svg>
+              <div class="ring-center-text">
+                <span class="ring-val" id="loggedCaloriesVal">1,850</span>
+                <span class="ring-lbl">/ <span id="targetCaloriesVal">2,800</span> kcal</span>
+              </div>
+            </div>
+
+            <div class="calorie-stats-list">
+              <div class="stat-row">
+                <span class="stat-dot dot-consumed"></span>
+                <span class="stat-label">Consumed</span>
+                <span class="stat-value" id="consumedCalText">1,850 kcal</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-dot dot-remaining"></span>
+                <span class="stat-label">Remaining</span>
+                <span class="stat-value" id="remainingCalText">950 kcal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Macro Progress Bars Card -->
+        <div class="glass-card macro-bars-card">
+          <span class="card-eyebrow">Macro Distribution</span>
+          <h2>Target Breakdown</h2>
+
+          <div class="macro-bars-list">
+            <!-- Protein -->
+            <div class="macro-bar-item">
+              <div class="macro-bar-header">
+                <span class="macro-name protein-color">Protein</span>
+                <span class="macro-count"><strong id="loggedProteinVal">145</strong> / <span id="targetProteinVal">200</span>g</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill fill-protein" id="proteinBarFill" style="width: 72.5%;"></div>
+              </div>
+            </div>
+
+            <!-- Carbohydrates -->
+            <div class="macro-bar-item">
+              <div class="macro-bar-header">
+                <span class="macro-name carbs-color">Carbs</span>
+                <span class="macro-count"><strong id="loggedCarbsVal">190</strong> / <span id="targetCarbsVal">280</span>g</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill fill-carbs" id="carbsBarFill" style="width: 67.8%;"></div>
+              </div>
+            </div>
+
+            <!-- Fats -->
+            <div class="macro-bar-item">
+              <div class="macro-bar-header">
+                <span class="macro-name fat-color">Fats</span>
+                <span class="macro-count"><strong id="loggedFatVal">52</strong> / <span id="targetFatVal">75</span>g</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill fill-fat" id="fatBarFill" style="width: 69.3%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Middle Row: Meal Log & Quick Log Actions -->
+      <div class="nutrition-detail-grid" style="margin-bottom: 1.5rem;">
+        <div class="glass-card meal-log-card">
+          <div class="meal-log-header">
+            <h3>Today's Meal Log</h3>
+            <span class="badge" style="background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.25);">3 Meals Logged</span>
+          </div>
+
+          <div class="logged-meals-list">
+            <div class="logged-meal-item">
+              <div class="meal-time">Breakfast</div>
+              <div class="meal-info">
+                <span class="meal-title">High-Protein Oatmeal with Berries & Whey</span>
+                <span class="meal-macros">540 kcal &bull; 45g Protein &bull; 62g Carbs &bull; 10g Fat</span>
+              </div>
+            </div>
+
+            <div class="logged-meal-item">
+              <div class="meal-time">Lunch</div>
+              <div class="meal-info">
+                <span class="meal-title">Acapulco Steak Tacos</span>
+                <span class="meal-macros">680 kcal &bull; 58g Protein &bull; 54g Carbs &bull; 24g Fat</span>
+              </div>
+            </div>
+
+            <div class="logged-meal-item">
+              <div class="meal-time">Snack</div>
+              <div class="meal-info">
+                <span class="meal-title">Greek Yogurt & Almond Bowl</span>
+                <span class="meal-macros">630 kcal &bull; 42g Protein &bull; 74g Carbs &bull; 18g Fat</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Historical Nutrition Summary & Logs -->
+      <div class="nutrition-history-grid" style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+        <!-- Historical Overview Summary Card -->
+        <div class="glass-card" style="padding: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+            <div>
+              <span class="card-eyebrow">Trends & Averages</span>
+              <h3 style="margin: 0.25rem 0 0 0;">Historical Overview</h3>
+            </div>
+            <select id="historyRangeSelect" class="form-control" style="width: auto; padding: 0.4rem 0.8rem; background: rgba(15, 23, 42, 0.6); color: #fff; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px;">
+              <option value="7">Last 7 Days</option>
+              <option value="14">Last 14 Days</option>
+              <option value="30">Last 30 Days</option>
+              <option value="0">All Time</option>
+            </select>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem;">
+            <div style="background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+              <span style="font-size: 0.8rem; color: rgba(255,255,255,0.6); display: block; margin-bottom: 0.25rem;">Avg Daily Calories</span>
+              <div id="avgCaloriesVal" style="font-size: 1.25rem; font-weight: 700; color: #38bdf8;">0 kcal</div>
+            </div>
+            <div style="background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+              <span style="font-size: 0.8rem; color: rgba(255,255,255,0.6); display: block; margin-bottom: 0.25rem;">Avg Daily Protein</span>
+              <div id="avgProteinVal" style="font-size: 1.25rem; font-weight: 700; color: #4ade80;">0 g</div>
+            </div>
+            <div style="background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+              <span style="font-size: 0.8rem; color: rgba(255,255,255,0.6); display: block; margin-bottom: 0.25rem;">Days Logged</span>
+              <div id="totalDaysLoggedVal" style="font-size: 1.25rem; font-weight: 700; color: #f43f5e;">0 days</div>
+            </div>
+            <div style="background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+              <span style="font-size: 0.8rem; color: rgba(255,255,255,0.6); display: block; margin-bottom: 0.25rem;">Target Hit Rate</span>
+              <div id="goalHitRateVal" style="font-size: 1.25rem; font-weight: 700; color: #fbbf24;">0%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Nutrition Logs Table Card -->
+        <div class="glass-card" style="padding: 1.5rem;">
+          <h3 style="margin-top: 0; margin-bottom: 1rem;">Daily Nutrition Logs</h3>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); font-size: 0.85rem;">
+                  <th style="padding: 0.75rem;">Date</th>
+                  <th style="padding: 0.75rem;">Calories</th>
+                  <th style="padding: 0.75rem;">Protein</th>
+                  <th style="padding: 0.75rem;">Carbs</th>
+                  <th style="padding: 0.75rem;">Fat</th>
+                  <th style="padding: 0.75rem;">Notes</th>
+                </tr>
+              </thead>
+              <tbody id="nutritionHistoryTableBody">
+                <!-- Populated dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SHOPPING LIST VIEW VIEW -->
+    <div id="shoppingView" class="glass-card placeholder-card hidden">
+      <div class="placeholder-content">
+        <div class="sparkle-icon">🛒</div>
+        <h2>Shopping List Coming Soon</h2>
+        <p>Automatically generate store-specific ingredient lists based on your selected grocer.</p>
+      </div>
+    </div>
+
+    <!-- General Fallback Placeholder -->
+    <div id="placeholderView" class="glass-card placeholder-card hidden">
+      <div class="placeholder-content">
+        <div class="sparkle-icon">✨</div>
+        <h2 id="placeholderTitle">Feature Coming Soon</h2>
+        <p>We are building out this section next. Stay tuned!</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Auth / Account Modal -->
+  <div id="authModal" class="modal-backdrop hidden">
+    <div class="modal-glass-container auth-modal-content" style="max-width: 520px; width: 90%; max-height: 90vh; overflow-y: auto;">
+      <button id="closeAuthModal" class="modal-close-btn">&times;</button>
+
+      <!-- Logged Out View -->
+      <div id="authForms">
+        <h2 id="authTitle" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Sign In</h2>
+        <p id="authSubtitle" style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 1.5rem;">Sign in to access your saved recipes and meal plans.</p>
+
+        <form id="authForm" style="display: flex; flex-direction: column; gap: 1rem;">
+          <input type="email" id="authEmail" placeholder="Email address" required class="auth-input" />
+          <input type="password" id="authPassword" placeholder="Password" required class="auth-input" />
+          <div id="authError" class="auth-error-text hidden"></div>
+          <button type="submit" id="authSubmitBtn" class="auth-submit-btn">Sign In</button>
+        </form>
+
+        <div style="margin-top: 1.25rem; font-size: 0.85rem; text-align: center; color: rgba(255,255,255,0.6);">
+          <span id="authToggleText">Don't have an account?</span>
+          <button id="toggleAuthMode" style="background: none; border: none; color: #38bdf8; font-weight: 600; cursor: pointer; text-decoration: underline; margin-left: 0.25rem;">Sign Up</button>
+        </div>
+      </div>
+
+      <!-- Logged In Profile View -->
+      <div id="userProfileView" class="hidden" style="text-align: left; padding: 0.5rem 0;">
+        <div style="text-align: center; margin-bottom: 1.25rem;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Account Settings</h2>
+          <p id="userEmailDisplay" style="color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-bottom: 0;"></p>
+        </div>
+
+        <hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.1); margin: 1.25rem 0;" />
+
+        <!-- Section 1: Daily Macro Goals -->
+        <section class="account-section" style="margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1.05rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.25rem;">Daily Macro Goals</h3>
+          <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1rem;">Set your target daily nutritional intake to personalize meal recommendations.</p>
+
+          <div class="macro-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem;">
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="goalCalories" style="font-size: 0.8rem; font-weight: 600; color: #cbd5e1;">Calories (kcal)</label>
+              <input type="number" id="goalCalories" class="auth-input" placeholder="2500" min="0" step="50" />
+            </div>
+
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="goalProtein" style="font-size: 0.8rem; font-weight: 600; color: #cbd5e1;">Protein (g)</label>
+              <input type="number" id="goalProtein" class="auth-input" placeholder="180" min="0" step="5" />
+            </div>
+
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="goalCarbs" style="font-size: 0.8rem; font-weight: 600; color: #cbd5e1;">Carbs (g)</label>
+              <input type="number" id="goalCarbs" class="auth-input" placeholder="200" min="0" step="5" />
+            </div>
+
+            <div class="form-group" style="display: flex; flex-direction: column; gap: 0.35rem;">
+              <label for="goalFat" style="font-size: 0.8rem; font-weight: 600; color: #cbd5e1;">Fat (g)</label>
+              <input type="number" id="goalFat" class="auth-input" placeholder="70" min="0" step="5" />
+            </div>
+          </div>
+        </section>
+
+        <hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.1); margin: 1.25rem 0;" />
+
+        <!-- Section 2: Preferred Grocery Store -->
+        <section class="account-section" style="margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1.05rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.25rem;">Preferred Grocery Store</h3>
+          <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1rem;">Select your primary grocer to optimize ingredient pricing and stock availability.</p>
+
+          <div id="storeGrid" class="store-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;">
+            <button type="button" class="store-card active" data-store="aldi">
+              <div class="store-logo-placeholder" style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; color: #38bdf8; letter-spacing: 0.03em;">ALDI</div>
+              <span class="store-name" style="font-size: 0.75rem; font-weight: 600; color: #e2e8f0; text-align: center;">ALDI</span>
+            </button>
+
+            <button type="button" class="store-card" data-store="trader-joes">
+              <div class="store-logo-placeholder" style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; color: #38bdf8; letter-spacing: 0.03em;">TJ's</div>
+              <span class="store-name" style="font-size: 0.75rem; font-weight: 600; color: #e2e8f0; text-align: center;">Trader Joe's</span>
+            </button>
+
+            <button type="button" class="store-card" data-store="meijer">
+              <div class="store-logo-placeholder" style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; color: #38bdf8; letter-spacing: 0.03em;">M</div>
+              <span class="store-name" style="font-size: 0.75rem; font-weight: 600; color: #e2e8f0; text-align: center;">Meijer</span>
+            </button>
+
+            <button type="button" class="store-card" data-store="jewel-osco">
+              <div class="store-logo-placeholder" style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; color: #38bdf8; letter-spacing: 0.03em;">JO</div>
+              <span class="store-name" style="font-size: 0.75rem; font-weight: 600; color: #e2e8f0; text-align: center;">Jewel-Osco</span>
+            </button>
+
+            <button type="button" class="store-card" data-store="whole-foods">
+              <div class="store-logo-placeholder" style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; color: #38bdf8; letter-spacing: 0.03em;">WF</div>
+              <span class="store-name" style="font-size: 0.75rem; font-weight: 600; color: #e2e8f0; text-align: center;">Whole Foods</span>
+            </button>
+
+            <button type="button" class="store-card" data-store="target">
+              <div class="store-logo-placeholder" style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; color: #38bdf8; letter-spacing: 0.03em;">TGT</div>
+              <span class="store-name" style="font-size: 0.75rem; font-weight: 600; color: #e2e8f0; text-align: center;">Target</span>
+            </button>
+
+            <button type="button" class="store-card" data-store="walmart">
+              <div class="store-logo-placeholder" style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; color: #38bdf8; letter-spacing: 0.03em;">WMT</div>
+              <span class="store-name" style="font-size: 0.75rem; font-weight: 600; color: #e2e8f0; text-align: center;">Walmart</span>
+            </button>
+
+            <button type="button" class="store-card" data-store="costco">
+              <div class="store-logo-placeholder" style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; color: #38bdf8; letter-spacing: 0.03em;">COST</div>
+              <span class="store-name" style="font-size: 0.75rem; font-weight: 600; color: #e2e8f0; text-align: center;">Costco</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Save Settings & Sign Out Actions -->
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem;">
+          <button id="saveAccountSettingsBtn" class="auth-submit-btn" style="width: 100%;">Save Settings</button>
+          <button id="signOutBtn" class="auth-submit-btn" style="width: 100%; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); color: #fca5a5;">Sign Out</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Recipe Detail Modal -->
+  <div id="recipeModal" class="modal-backdrop hidden">
+    <div class="modal-glass-container">
+      <button id="closeModal" class="modal-close-btn">&times;</button>
+      <div id="modalBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drizzl — Recipe Details</title>
+  <link rel="stylesheet" href="./src/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Franklin+Gothic+Medium&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Overrides for Compact Multi-Step Timers */
+    .cook-top-left {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .cook-timers-columns-wrapper {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    .cook-timer-column {
+      flex: 1 0 95px;
+      max-width: 110px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 0.4rem 0.35rem;
+      height: 100%;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .cook-timer-column.active-step-col {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.08);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
+    }
+
+    .cook-col-header {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+      margin-bottom: 0.1rem;
+      flex-shrink: 0;
+    }
+
+    .cook-col-empty {
+      font-size: 0.7rem;
+      color: #475569;
+      font-style: italic;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    /* Compact Interactive Timer Pill */
+    .timer-pill {
+      position: relative;
+      width: 100%;
+      height: 32px;
+      flex-shrink: 0;
+      border-radius: 5px;
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0.4rem;
+      background: #1e293b;
+      border: 1px solid #0284c7;
+      transition: border-color 0.2s ease, transform 0.1s ease;
+      box-sizing: border-box;
+    }
+
+    .timer-pill:active {
+      transform: scale(0.96);
+    }
+
+    /* Dynamic Progress Fill Layer */
+    .timer-progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background: #0284c7; /* Idle Blue */
+      transition: width 1s linear, background-color 0.3s ease;
+      z-index: 1;
+    }
+
+    .timer-pill-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      font-family: monospace;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .timer-num-badge {
+      font-size: 0.7rem;
+      opacity: 0.9;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.05rem 0.25rem;
+      border-radius: 3px;
+    }
+
+    .timer-digits-text {
+      font-size: 0.85rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* States */
+    /* Running -> Green */
+    .timer-pill.running .timer-progress-fill {
+      background: #16a34a;
+    }
+    .timer-pill.running {
+      border-color: #22c55e;
+    }
+
+    /* Paused -> Red */
+    .timer-pill.paused .timer-progress-fill {
+      background: #dc2626;
+    }
+    .timer-pill.paused {
+      border-color: #ef4444;
+    }
+
+    /* Completed -> Flashing Amber/Orange */
+    .timer-pill.completed {
+      animation: flashAmber 0.8s infinite alternate;
+      border-color: #f59e0b;
+    }
+    .timer-pill.completed .timer-progress-fill {
+      background: #f59e0b;
+      width: 100% !important;
+    }
+
+    @keyframes flashAmber {
+      0% {
+        opacity: 1;
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
+      }
+      100% {
+        opacity: 0.3;
+        box-shadow: none;
+      }
+    }
+
+    /* Dismissed/Disabled -> Grey */
+    .timer-pill.disabled {
+      cursor: not-allowed;
+      border-color: #334155;
+      background: #0f172a;
+      opacity: 0.35;
+    }
+    .timer-pill.disabled .timer-progress-fill {
+      background: #334155;
+      width: 0% !important;
+    }
+
+    /* Fix instruction container overflow */
+    .cook-instruction-section {
+      height: 100%;
+      overflow: hidden !important;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      box-sizing: border-box;
+    }
+
+    .cook-instruction-text {
+      margin: 0;
+      max-height: 100%;
+      overflow: hidden;
+      word-break: break-word;
+    }
+
+    /* Detail Page Favorite Button Controls */
+    .fav-btn-detail {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f8fafc;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .fav-btn-detail:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .fav-btn-detail.is-favorited {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+
+    .fav-btn-detail.is-favorited:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    /* Pink Recipe ID Pill Styling */
+    .recipe-id-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      background: rgba(244, 63, 94, 0.15);
+      color: #fb7185;
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .recipe-id-pill:hover {
+      background: rgba(244, 63, 94, 0.25);
+      border-color: rgba(244, 63, 94, 0.6);
+      color: #fda4af;
+      transform: translateY(-1px);
+    }
+
+    .recipe-id-pill:active {
+      transform: scale(0.95);
+    }
+
+    /* Navbar Inline Macro Bar Styles */
+    .nav-macro-bar {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-macro-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.1;
+    }
+
+    .nav-macro-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .nav-macro-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    .nav-macro-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .nav-macro-item.calories .nav-macro-value { color: #f8fafc; }
+    .nav-macro-item.protein .nav-macro-value { color: #38bdf8; }
+    .nav-macro-item.carbs .nav-macro-value { color: #fbbf24; }
+    .nav-macro-item.fat .nav-macro-value { color: #f43f5e; }
+  </style>
+</head>
+<body class="dark">
+
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+
+  <!-- Navigation -->
+  <header class="nav-bar">
+    <div class="nav-container">
+      <a href="./index.html" class="brand-logo">
+        <span class="logo-text">Drizzl</span>
+      </a>
+
+      <!-- Moved Macro Bar directly inside top navbar -->
+      <div id="macroBar" class="nav-macro-bar">
+        <div class="nav-macro-item calories">
+          <span class="nav-macro-value" id="nfCalories">0</span>
+          <span class="nav-macro-label">Calories</span>
+        </div>
+        <div class="nav-macro-divider"></div>
+        <div class="nav-macro-item protein">
+          <span class="nav-macro-value" id="nfProtein">0g</span>
+          <span class="nav-macro-label">Protein</span>
+        </div>
+        <div class="nav-macro-divider"></div>
+        <div class="nav-macro-item carbs">
+          <span class="nav-macro-value" id="nfCarbs">0g</span>
+          <span class="nav-macro-label">Carbs</span>
+        </div>
+        <div class="nav-macro-divider"></div>
+        <div class="nav-macro-item fat">
+          <span class="nav-macro-value" id="nfFat">0g</span>
+          <span class="nav-macro-label">Fat</span>
+        </div>
+      </div>
+
+      <a href="./index.html" id="backBtn" class="back-link">← Back to All Recipes</a>
+    </div>
+  </header>
+
+  <!-- Recipe Details Container -->
+  <main class="content-wrapper recipe-page">
+    <div id="loading" class="glass-card status-box">
+      <div class="spinner"></div>
+      <span>Loading deliciousness...</span>
+    </div>
+
+    <div id="error" class="glass-card status-box error-box hidden"></div>
+
+    <article id="recipeContainer" class="hidden">
+      <!-- Full-Width Hero Header -->
+      <section class="recipe-hero-card glass-card">
+        <div class="hero-image-wrap">
+          <img id="heroImage" src="" alt="" class="hero-img" />
+          <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+          <div class="hero-badges-wrapper" style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            <div class="hero-badges" id="heroBadges"></div>
+            <!-- Dynamic Pink Recipe ID Pill -->
+            <span id="recipeIdPill" class="recipe-id-pill" title="Click to copy ID">ID: --</span>
+          </div>
+          <h1 id="recipeTitle" class="recipe-main-title"></h1>
+          <p id="recipeSubtitle" class="recipe-main-subtitle"></p>
+          <div class="hero-meta-bar">
+            <div class="meta-left">
+              <div class="meta-item"><span class="meta-label">Prep Time</span><span id="prepTime" class="meta-val"></span></div>
+              <div class="meta-item"><span class="meta-label">Difficulty</span><span id="difficulty" class="meta-val"></span></div>
+              <div class="meta-item"><span class="meta-label">Base Servings</span><span id="baseServings" class="meta-val">2 people</span></div>
+            </div>
+
+            <div class="meta-right" style="display: flex; gap: 0.75rem; align-items: center;">
+              <!-- Favorite Button Trigger -->
+              <button id="favBtnDetail" class="fav-btn-detail">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                <span>Favorite</span>
+              </button>
+
+              <!-- Cook Mode Trigger Button -->
+              <button id="startCookModeBtn" class="cook-mode-btn">Cook</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Recipe Flow: Ingredients & Method -->
+      <div class="main-recipe-flow">
+
+        <!-- Ingredients Section -->
+        <section class="glass-card section-card">
+          <div class="section-header-flex">
+            <div>
+              <h2 class="section-heading">Ingredients</h2>
+              <p class="section-subheading">Scaled automatically to your targets</p>
+            </div>
+
+            <!-- Serving Scale Selector -->
+            <div class="multiplier-controls">
+              <span class="scale-lbl">Scale:</span>
+              <button class="scale-btn" data-scale="0.5">0.5x</button>
+              <button class="scale-btn active" data-scale="1">1x</button>
+              <button class="scale-btn" data-scale="2">2x</button>
+              <button class="scale-btn" data-scale="4">4x</button>
+            </div>
+          </div>
+
+          <!-- Ingredient Cards Grid -->
+          <div id="ingredientGrid" class="ingredient-card-grid"></div>
+        </section>
+
+        <!-- Instructions Section -->
+        <section class="glass-card section-card">
+          <h2 class="section-heading">Preparation Steps</h2>
+          <ol id="instructionList" class="instruction-timeline"></ol>
+        </section>
+      </div>
+    </article>
+  </main>
+
+  <!-- Cook Mode Fullscreen Overlay -->
+  <div id="cookModeOverlay" class="cook-mode-overlay hidden">
+    <button id="closeCookModeBtn" class="cook-mode-close">&times; Exit Cook Mode</button>
+
+    <div class="cook-mode-grid">
+      <!-- Left Panel: Title & Ingredients List -->
+      <aside class="cook-left-panel">
+        <div class="cook-recipe-header">
+          <h2 id="cookRecipeTitle" class="cook-recipe-title">Recipe Title</h2>
+          <p id="cookRecipeSubtitle" class="cook-recipe-subtitle"></p>
+        </div>
+
+        <div class="cook-ingredients-container">
+          <h3>Ingredients</h3>
+          <ul id="cookIngredientList" class="cook-ingredient-list"></ul>
+        </div>
+      </aside>
+
+      <!-- Right Panel: Top 30% Dashboard, Bottom 70% Text -->
+      <main class="cook-right-panel">
+
+        <!-- Top Section (30% Height) -->
+        <div class="cook-top-section">
+          <!-- Top Left Sub-Grid (Persistent Timer Columns directly) -->
+          <div class="cook-top-left">
+            <div id="cookTimersContainer" class="cook-timers-columns-wrapper"></div>
+          </div>
+
+          <!-- Top Right Photo Section -->
+          <div class="cook-photo-section">
+            <img id="cookStepPhoto" class="cook-step-photo" src="" alt="Step Photo" />
+            <div id="cookPhotoPlaceholder" class="cook-photo-placeholder hidden">
+              <span>No image available</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Section (70% Height): Instruction Text -->
+        <div class="cook-instruction-section">
+          <p id="cookInstructionText" class="cook-instruction-text"></p>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="./src/recipeDetail.js"></script>
+</body>
+</html>

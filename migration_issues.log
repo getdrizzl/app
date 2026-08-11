@@ -1,0 +1,738 @@
+=== DRIZZL DATA MIGRATION ISSUES LOG ===
+
+Recipe ID: RCP_100
+  - Nutrition data unpopulated or missing
+  - Ingredients field is missing or not a string
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_242
+  - Nutrition data unpopulated or missing
+
+Recipe ID: RCP_270
+  - Nutrition data unpopulated or missing
+  - Ingredients field is missing or not a string
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_271
+  - Nutrition data unpopulated or missing
+  - Ingredients field is missing or not a string
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_293
+  - Nutrition data unpopulated or missing
+  - Ingredients field is missing or not a string
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_294
+  - Nutrition data unpopulated or missing
+  - Ingredients field is missing or not a string
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_319
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_320
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_321
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_322
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_323
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_324
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_325
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_326
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_327
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_328
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_329
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_330
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_331
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_332
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_333
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_334
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_335
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_336
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_337
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_338
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_339
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_340
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_341
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_342
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_343
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_344
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_345
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_346
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_347
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_348
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_349
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_350
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_351
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_352
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_353
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_354
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_355
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_356
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_357
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_358
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_359
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_360
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_361
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_362
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_363
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_364
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_365
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_366
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_367
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_368
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_369
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_370
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_371
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_372
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_373
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_374
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_375
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_376
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_377
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_378
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_379
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_380
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_381
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_382
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_383
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_384
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_385
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_386
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_387
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_388
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_389
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_390
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_391
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_392
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_393
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_394
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_395
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_396
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_397
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_398
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_399
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_400
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_401
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_402
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_403
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_404
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_405
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_406
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_407
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_408
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_409
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_410
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_411
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_412
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_413
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_414
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_415
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_416
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_417
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_418
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_419
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_420
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_421
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_422
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_423
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_424
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_425
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_426
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_427
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_428
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_429
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_430
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_431
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_432
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_433
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_434
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_435
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_436
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_437
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_438
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_439
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_440
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_441
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_442
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_443
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_444
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_445
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_446
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_447
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_448
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_449
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_450
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_451
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_452
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_453
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_454
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_455
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_456
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_457
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_458
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1434
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1435
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1474
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1540
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1552
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1554
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1555
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1591
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1603
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1674
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1675
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1746
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1752
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1766
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1780
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1794
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1843
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1853
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1869
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1893
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1911
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1921
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1932
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1941
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1942
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1975
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_1989
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2000
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2001
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2004
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2030
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2115
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2116
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2117
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2118
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2144
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2155
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2291
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2325
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2326
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2340
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2366
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2367
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2368
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2369
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2388
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2429
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2438
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2443
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2445
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2456
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2458
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2465
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2471
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2476
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2478
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2501
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2502
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2505
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2508
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2515
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2521
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2522
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2527
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2528
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2534
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2538
+  - Nutrition data unpopulated or missing
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2544
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2545
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2558
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2569
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2576
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2578
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2591
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2605
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2606
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2614
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2615
+  - Instructions missing or unpopulated
+
+Recipe ID: RCP_2618
+  - Nutrition data unpopulated or missing
+
