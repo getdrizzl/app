@@ -626,12 +626,21 @@ supabase.auth.onAuthStateChange(async (event, session) => {
 
 // --- REALTIME BROADCAST LISTENER FOR HOME ASSISTANT VOICE COMMANDS ---
 
-const voiceChannel = supabase.channel('drizzl-voice-commands')
+// NEW CODE:
+const voiceChannel = supabase.channel('drizzl-voice-commands', {
+  config: {
+    broadcast: { self: true }
+  }
+})
+
 voiceChannel
   .on('broadcast', { event: 'voice_command' }, (payload) => {
+    console.log('Broadcast received in browser:', payload)
     handleIncomingVoiceCommand(payload.payload)
   })
-  .subscribe()
+  .subscribe((status) => {
+    console.log('Realtime Voice Channel Status:', status)
+  })
 
 function handleIncomingVoiceCommand(data) {
   if (!data || !data.action) return
