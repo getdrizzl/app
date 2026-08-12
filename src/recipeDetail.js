@@ -126,7 +126,6 @@ function updateDetailFavButtonUI() {
   const favBtnDetail = document.getElementById('favBtnDetail')
   if (!favBtnDetail) return
 
-  // Matching Pill styling across all buttons
   favBtnDetail.style.borderRadius = '9999px'
 
   if (isFavorited) {
@@ -216,13 +215,11 @@ async function loadRecipePage() {
       heroCard.style.flexDirection = 'column'
       heroCard.style.justifyContent = 'flex-end'
 
-      // Clean out existing backdrop elements if re-rendered
       const existingBg = heroCard.querySelector('.hero-bg-layer')
       if (existingBg) existingBg.remove()
       const existingGradient = heroCard.querySelector('.hero-gradient-layer')
       if (existingGradient) existingGradient.remove()
 
-      // Layer 1: Bottom Image filling full container
       const bgImg = document.createElement('img')
       bgImg.className = 'hero-bg-layer'
       bgImg.src = heroImageUrl
@@ -235,7 +232,6 @@ async function loadRecipePage() {
       bgImg.style.objectFit = 'cover'
       bgImg.style.zIndex = '1'
 
-      // Layer 2: Middle Gradient Overlay from bottom up to subtitle line
       const gradientOverlay = document.createElement('div')
       gradientOverlay.className = 'hero-gradient-layer'
       gradientOverlay.style.position = 'absolute'
@@ -250,7 +246,6 @@ async function loadRecipePage() {
       heroCard.insertBefore(bgImg, heroCard.firstChild)
       heroCard.insertBefore(gradientOverlay, bgImg.nextSibling)
 
-      // Ensure content wrapper sits cleanly on Layer 3
       const contentWrapper = heroCard.querySelector('.hero-content') || heroCard.children[2]
       if (contentWrapper) {
         contentWrapper.style.position = 'relative'
@@ -418,37 +413,6 @@ function initializeGlobalTimers(steps) {
       })
     }
   })
-
-  syncTimersToHomeAssistant()
-}
-
-async function syncTimersToHomeAssistant() {
-  const payloadTimers = globalTimers.slice(0, 10).map(timer => ({
-    id: timer.id,
-    step: timer.stepIndex + 1,
-    duration_seconds: timer.initialSeconds
-  }))
-
-  try {
-    const response = await fetch(`${HA_URL}/api/webhook/drizzl_sync_timers`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        recipe: recipeData ? recipeData.title : 'Unknown Recipe',
-        timers: payloadTimers
-      })
-    })
-
-    if (!response.ok) {
-      console.warn('Failed to sync timers to Home Assistant:', response.statusText)
-    } else {
-      console.log('Successfully dispatched timers to Home Assistant:', payloadTimers)
-    }
-  } catch (err) {
-    console.error('Error dispatching recipe timers to Home Assistant webhook:', err)
-  }
 }
 
 function toggleTimerState(timerId) {
@@ -757,61 +721,37 @@ supabase.auth.onAuthStateChange(async (event, session) => {
 initAuth()
 loadRecipePage()
 
-const HA_URL = 'http://10.0.0.213:8123'
-const HA_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI4NjQxY2I0ZTI2MDA0ZjNhOWJmYjA3MDA3ZTEzMzI2NiIsImlhdCI6MTc4NjA0NTUyMSwiZXhwIjoyMTAxNDA1NTIxfQ.kMwGhLJw_oPIJZw7RMQNDjhPi9JZq9MpTFybyc9FNiQ'
-
+// --- Event-Driven Realtime Listener for HA Voice Commands ---
 let currentSearchResults = []
 
-async function checkVoiceCommand() {
-  try {
-    const res = await fetch(`${HA_URL}/api/states/input_text.drizzl_command`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${HA_TOKEN}`,
-        'Content-Type': 'application/json'
-      }
-    })
+const voiceChannel = supabase.channel('drizzl-voice-commands')
+voiceChannel
+  .on('broadcast', { event: 'voice_command' }, (payload) => {
+    console.log('Voice Command Payload Received:', payload)
+    handleIncomingVoiceCommand(payload.payload)
+  })
+  .subscribe((status) => {
+    console.log('Supabase Voice Channel Status:', status)
+  })
 
-    if (!res.ok) return
+async function handleIncomingVoiceCommand(data) {
+  if (!data || !data.action) return
+  const { action, payload } = data
 
-    const data = await res.json()
-    const command = data.state
+  console.log('Received Realtime HA Event:', action, payload)
 
-    if (command && command !== 'idle' && command !== 'unknown' && command !== 'unavailable') {
-      console.log('Received HA Command:', command)
-
-      if (command.includes(':')) {
-        const [action, payload] = command.split(':')
-
-        if (action === 'search') {
-          await handleVoiceSearch(payload)
-        } else if (action === 'select') {
-          const index = parseInt(payload, 10)
-          handleVoiceSelect(index)
-        } else if (action === 'timer') {
-          const timerId = parseInt(payload, 10)
-          if (!isNaN(timerId)) toggleTimerState(timerId)
-        }
-      } else if (command === 'next' || command === 'prev') {
-        if (!isCookModeActive) openCookMode()
-        if (command === 'next') nextStep()
-        if (command === 'prev') prevStep()
-      }
-
-      await fetch(`${HA_URL}/api/services/input_text/set_value`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${HA_TOKEN}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          entity_id: 'input_text.drizzl_command',
-          value: 'idle'
-        })
-      })
-    }
-  } catch (err) {
-    console.error('CORS or Network Error connecting to Home Assistant:', err)
+  if (action === 'search') {
+    await handleVoiceSearch(payload)
+  } else if (action === 'select') {
+    const index = parseInt(payload, 10)
+    handleVoiceSelect(index)
+  } else if (action === 'timer') {
+    const timerId = parseInt(payload, 10)
+    if (!isNaN(timerId)) toggleTimerState(timerId)
+  } else if (action === 'next' || action === 'prev') {
+    if (!isCookModeActive) openCookMode()
+    if (action === 'next') nextStep()
+    if (action === 'prev') prevStep()
   }
 }
 
@@ -885,5 +825,3 @@ function handleVoiceSelect(index) {
     window.location.href = `?id=${selectedRecipe.id}${fromParam}`
   }
 }
-
-setInterval(checkVoiceCommand, 500)
