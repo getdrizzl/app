@@ -55,6 +55,11 @@ function setupBackButton() {
   }
 }
 
+function goBackToGrid() {
+  const targetSection = fromSection === 'my-recipes' ? 'my-recipes' : 'all'
+  window.location.href = `./index.html?section=${targetSection}`
+}
+
 async function checkFavoriteStatus(recipeId) {
   const { data: { session } } = await supabase.auth.getSession()
   currentUser = session?.user || null
@@ -724,7 +729,12 @@ loadRecipePage()
 // --- Event-Driven Realtime Listener for HA Voice Commands ---
 let currentSearchResults = []
 
-const voiceChannel = supabase.channel('drizzl-voice-commands')
+const voiceChannel = supabase.channel('drizzl-voice-commands', {
+  config: {
+    broadcast: { self: true }
+  }
+})
+
 voiceChannel
   .on('broadcast', { event: 'voice_command' }, (payload) => {
     console.log('Voice Command Payload Received:', payload)
@@ -740,7 +750,33 @@ async function handleIncomingVoiceCommand(data) {
 
   console.log('Received Realtime HA Event:', action, payload)
 
-  if (action === 'search') {
+  if (action === 'back') {
+    if (isCookModeActive) {
+      closeCookMode()
+    } else {
+      goBackToGrid()
+    }
+  } else if (action === 'favorite') {
+    await toggleDetailFavorite()
+  } else if (action === 'cook_mode' || action === 'start_cook') {
+    if (!isCookModeActive) {
+      openCookMode()
+    }
+  } else if (action === 'exit_cook') {
+    if (isCookModeActive) {
+      closeCookMode()
+    }
+  } else if (action === 'next') {
+    if (!isCookModeActive) {
+      openCookMode()
+    } else {
+      nextStep()
+    }
+  } else if (action === 'prev') {
+    if (isCookModeActive) {
+      prevStep()
+    }
+  } else if (action === 'search') {
     await handleVoiceSearch(payload)
   } else if (action === 'select') {
     const index = parseInt(payload, 10)
@@ -748,10 +784,6 @@ async function handleIncomingVoiceCommand(data) {
   } else if (action === 'timer') {
     const timerId = parseInt(payload, 10)
     if (!isNaN(timerId)) toggleTimerState(timerId)
-  } else if (action === 'next' || action === 'prev') {
-    if (!isCookModeActive) openCookMode()
-    if (action === 'next') nextStep()
-    if (action === 'prev') prevStep()
   }
 }
 
