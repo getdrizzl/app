@@ -624,55 +624,26 @@ supabase.auth.onAuthStateChange(async (event, session) => {
   }
 })
 
-// --- HOME ASSISTANT VOICE COMMAND POLLING ---
+// --- REALTIME BROADCAST LISTENER FOR HOME ASSISTANT VOICE COMMANDS ---
 
-const HA_URL = 'http://10.0.0.213:8123'
-const HA_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI4NjQxY2I0ZTI2MDA0ZjNhOWJmYjA3MDA3ZTEzMzI2NiIsImlhdCI6MTc4NjA0NTUyMSwiZXhwIjoyMTAxNDA1NTIxfQ.kMwGhLJw_oPIJZw7RMQNDjhPi9JZq9MpTFybyc9FNiQ'
+const voiceChannel = supabase.channel('drizzl-voice-commands')
+voiceChannel
+  .on('broadcast', { event: 'voice_command' }, (payload) => {
+    handleIncomingVoiceCommand(payload.payload)
+  })
+  .subscribe()
 
-async function checkVoiceCommand() {
-  try {
-    const res = await fetch(`${HA_URL}/api/states/input_text.drizzl_command`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${HA_TOKEN}`,
-        'Content-Type': 'application/json'
-      }
-    })
+function handleIncomingVoiceCommand(data) {
+  if (!data || !data.action) return
+  const { action, payload } = data
 
-    if (!res.ok) return
+  console.log('Received Realtime HA Event on Main Page:', action, payload)
 
-    const data = await res.json()
-    let command = data.state
-
-    if (command && command !== 'idle' && command !== 'unknown' && command !== 'unavailable') {
-      console.log('Received HA Command on Main Page:', command)
-
-      if (command.includes(':')) {
-        let [action, payload] = command.split(':')
-        payload = payload.replace(/^(recipes for|recipe for)\s+/i, '').trim()
-
-        if (action === 'search') {
-          handleVoiceSearch(payload)
-        } else if (action === 'select') {
-          const index = parseInt(payload, 10)
-          handleVoiceSelect(index)
-        }
-      }
-
-      await fetch(`${HA_URL}/api/services/input_text/set_value`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${HA_TOKEN}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          entity_id: 'input_text.drizzl_command',
-          value: 'idle'
-        })
-      })
-    }
-  } catch (err) {
-    console.error('Error polling Home Assistant:', err)
+  if (action === 'search') {
+    handleVoiceSearch(payload)
+  } else if (action === 'select') {
+    const index = parseInt(payload, 10)
+    handleVoiceSelect(index)
   }
 }
 
@@ -710,4 +681,3 @@ function handleVoiceSelect(index) {
 // Init
 initAuth()
 fetchRecipes()
-setInterval(checkVoiceCommand, 500)
