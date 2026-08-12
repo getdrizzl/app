@@ -418,6 +418,37 @@ function initializeGlobalTimers(steps) {
       })
     }
   })
+
+  syncTimersToHomeAssistant()
+}
+
+async function syncTimersToHomeAssistant() {
+  const payloadTimers = globalTimers.slice(0, 10).map(timer => ({
+    id: timer.id,
+    step: timer.stepIndex + 1,
+    duration_seconds: timer.initialSeconds
+  }))
+
+  try {
+    const response = await fetch(`${HA_URL}/api/webhook/drizzl_sync_timers`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        recipe: recipeData ? recipeData.title : 'Unknown Recipe',
+        timers: payloadTimers
+      })
+    })
+
+    if (!response.ok) {
+      console.warn('Failed to sync timers to Home Assistant:', response.statusText)
+    } else {
+      console.log('Successfully dispatched timers to Home Assistant:', payloadTimers)
+    }
+  } catch (err) {
+    console.error('Error dispatching recipe timers to Home Assistant webhook:', err)
+  }
 }
 
 function toggleTimerState(timerId) {
